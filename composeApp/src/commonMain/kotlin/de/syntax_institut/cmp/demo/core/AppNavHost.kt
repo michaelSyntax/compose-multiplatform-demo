@@ -2,10 +2,12 @@ package de.syntax_institut.cmp.demo.core
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import de.syntax_institut.cmp.demo.navigation.NavigationItem
 import de.syntax_institut.cmp.demo.navigation.Route
 import de.syntax_institut.cmp.demo.ui.FavoritesScreen
@@ -15,9 +17,6 @@ import de.syntax_institut.cmp.demo.ui.MealListScreen
 import de.syntax_institut.cmp.demo.ui.MealViewModel
 import de.syntax_institut.cmp.demo.ui.RandomMealScreen
 import org.koin.compose.viewmodel.koinViewModel
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.syntax_institut.cmp.demo.data.model.Meal
 
 @Composable
 fun AppNavHost(
@@ -31,6 +30,9 @@ fun AppNavHost(
     val viewModel = koinViewModel<MealViewModel>()
     val categories by viewModel.mealCategories.collectAsState()
     val randomMeal by viewModel.randomMeal.collectAsState()
+    val mealsForCategory by viewModel.mealsForCategory.collectAsState()
+    val selectedMealDetail by viewModel.selectedDetailMeal.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState()
 
     NavHost(
         navController = navController,
@@ -52,16 +54,36 @@ fun AppNavHost(
             MealCategoriesScreen(
                 modifier = modifier,
                 didSelectCategory = {
-
+                    navController.navigate(Route.MealList(catId = it))
                 },
                 categories = categories,
             )
         }
         composable<Route.MealDetail> {
-            MealDetailScreen(modifier = modifier)
+            val routeMealDetail: Route.MealDetail = it.toRoute()
+            viewModel.selectDetailMeal(routeMealDetail.mealId)
+            viewModel.isFavorite(routeMealDetail.mealId)
+
+            MealDetailScreen(
+                meal = selectedMealDetail,
+                toggleFavorite = { toggleMeal ->
+                    viewModel.toggleFavoriteMeal(toggleMeal)
+                },
+                modifier = modifier,
+                isFavorite = isFavorite
+            )
         }
         composable<Route.MealList> {
-            MealListScreen(modifier = modifier)
+            val routeMealList: Route.MealList = it.toRoute()
+            viewModel.didSelectCategory(routeMealList.catId)
+
+            MealListScreen(
+                modifier = modifier,
+                meals = mealsForCategory,
+                didSelectMeal = {
+                    navController.navigate(Route.MealDetail(mealId = it))
+                }
+            )
         }
     }
 }
