@@ -1,5 +1,6 @@
 package de.syntax_institut.cmp.demo.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -13,9 +14,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.syntax_institut.cmp.demo.data.model.MealCategory
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import coil3.compose.AsyncImage
+import kotlinx.serialization.json.JsonNull.content
 
 @Composable
 fun MealCategoriesScreen(
@@ -24,14 +27,14 @@ fun MealCategoriesScreen(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.background(MaterialTheme.colorScheme.background),
         content = {
             items(categories) {
                 ElevatedCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp)
-                        .clickable(onClick = { didSelectCategory(it.idCategory) }),
+                        .clickable(onClick = { didSelectCategory(it.strCategory) }),
                     content = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),

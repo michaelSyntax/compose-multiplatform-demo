@@ -44,7 +44,7 @@ class MealViewModel(
 
     fun didSelectCategory(catId: String) {
         viewModelScope.launch {
-            mealRepository.getMealsForCategory(catId)
+            _mealsForCategory.value = mealRepository.getMealsForCategory(catId)
         }
     }
 

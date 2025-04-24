@@ -24,7 +24,7 @@ class DefaultMealRepository(
     }
 
     override suspend fun getMeal(mealId: String): Meal {
-        return mealDao.getFavoriteMeal(mealId)
+        return apiService.getMealDetails(mealId)
     }
 
     override fun getFavoriteMeals(): Flow<List<Meal>> {

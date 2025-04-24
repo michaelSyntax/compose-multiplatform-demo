@@ -59,6 +59,18 @@ fun AppNavHost(
                 categories = categories,
             )
         }
+        composable<Route.MealList> {
+            val routeMealList: Route.MealList = it.toRoute()
+            viewModel.didSelectCategory(routeMealList.catId)
+
+            MealListScreen(
+                modifier = modifier,
+                meals = mealsForCategory,
+                didSelectMeal = {
+                    navController.navigate(Route.MealDetail(mealId = it))
+                }
+            )
+        }
         composable<Route.MealDetail> {
             val routeMealDetail: Route.MealDetail = it.toRoute()
             viewModel.selectDetailMeal(routeMealDetail.mealId)
@@ -71,18 +83,6 @@ fun AppNavHost(
                 },
                 modifier = modifier,
                 isFavorite = isFavorite
-            )
-        }
-        composable<Route.MealList> {
-            val routeMealList: Route.MealList = it.toRoute()
-            viewModel.didSelectCategory(routeMealList.catId)
-
-            MealListScreen(
-                modifier = modifier,
-                meals = mealsForCategory,
-                didSelectMeal = {
-                    navController.navigate(Route.MealDetail(mealId = it))
-                }
             )
         }
     }
