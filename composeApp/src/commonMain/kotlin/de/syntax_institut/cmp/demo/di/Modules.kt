@@ -7,8 +7,10 @@ import de.syntax_institut.cmp.demo.data.remote.MealApi
 import de.syntax_institut.cmp.demo.data.remote.MealApiService
 import de.syntax_institut.cmp.demo.data.repository.DefaultMealRepository
 import de.syntax_institut.cmp.demo.data.repository.MealRepository
+import de.syntax_institut.cmp.demo.ui.MealViewModel
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -25,8 +27,6 @@ val sharedModule = module {
          .build()
    }
    single { get<MealDatabase>().mealDao }
-//
-   //viewModelOf(::BookListViewModel)
-   //viewModelOf(::BookDetailViewModel)
-   //viewModelOf(::SelectedBookViewModel)
+
+   viewModelOf(::MealViewModel)
 }
