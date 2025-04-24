@@ -1,9 +1,13 @@
 package de.syntax_institut.cmp.demp
 
+import kotlin.random.Random
+
 class Greeting {
-    private val platform = getPlatform()
+    private val platform: Platform = getPlatform()
 
     fun greet(): String {
-        return "Hello, ${platform.name}!"
+        val firstWord = if (Random.nextBoolean()) "Hi!" else "Hello!"
+
+        return "$firstWord Guess what this is! > ${platform.name.reversed()}!"
     }
 }
