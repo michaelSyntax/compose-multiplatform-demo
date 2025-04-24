@@ -1,4 +1,4 @@
-package de.syntax_institut.cmp.demo
+package de.syntax_institut.cmp.demo.core
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +16,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import de.syntax_institut.cmp.demo.navigation.AppNavHost
 import de.syntax_institut.cmp.demo.navigation.BottomNavigationBar
 import de.syntax_institut.cmp.demo.navigation.NavigationItem
 import org.jetbrains.compose.ui.tooling.preview.Preview

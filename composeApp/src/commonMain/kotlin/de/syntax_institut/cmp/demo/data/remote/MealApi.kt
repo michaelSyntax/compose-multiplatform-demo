@@ -20,29 +20,8 @@ import kotlinx.serialization.json.Json
 private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
 
 class MealApi(
-    private val httpClient: HttpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                    prettyPrint = true
-                    isLenient = true
-                }
-            )
-        }
-        install(Logging) {
-            logger = object : Logger {
-                override fun log(message: String) {
-                    println(message)
-                }
-            }
-            level = LogLevel.ALL
-        }
-        defaultRequest {
-            contentType(ContentType.Application.Json)
-        }
-    }
-) : MealApiService {
+    private val httpClient: HttpClient
+): MealApiService {
 
     override suspend fun getRandomMeal(): Meal {
         val response: MealResponse = httpClient.get(BASE_URL + "random.php").body()
