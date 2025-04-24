@@ -5,14 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -22,12 +18,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import composemultiplatformdemo.composeapp.generated.resources.Res
 import composemultiplatformdemo.composeapp.generated.resources.compose_multiplatform
+import de.syntax_institut.cmp.demp.data.remote.MealDBApi
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -36,6 +34,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
+        val coroutineScope = rememberCoroutineScope()
+
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
@@ -59,7 +59,12 @@ fun App() {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Button(
-                        onClick = { showContent = !showContent }
+                        onClick = {
+                            //showContent = !showContent
+                            coroutineScope.launch {
+                                MealDBApi().randomMeal()
+                            }
+                        }
                     ) {
                         Text(text = "Click me!")
                     }
