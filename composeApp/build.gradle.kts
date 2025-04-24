@@ -28,7 +28,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "ComposeApp"
+            baseName = "cmpMealDemo"
             isStatic = true
         }
     }
@@ -80,11 +80,11 @@ kotlin {
 }
 
 android {
-    namespace = "de.syntax_institut.cmp.demp"
+    namespace = "de.syntax_institut.cmp.demo"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "de.syntax_institut.cmp.demp"
+        applicationId = "de.syntax_institut.cmp.demo"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1

@@ -1,9 +1,13 @@
-package de.syntax_institut.cmp.demp.data.model
+package de.syntax_institut.cmp.demo.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Entity
 data class Meal(
+    @PrimaryKey(autoGenerate = false)
     val idMeal: String = "",
     val strMeal: String = "",
     val strMealAlternate: String? = null,

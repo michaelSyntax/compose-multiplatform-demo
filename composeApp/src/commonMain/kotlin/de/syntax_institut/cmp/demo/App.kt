@@ -1,4 +1,4 @@
-package de.syntax_institut.cmp.demp
+package de.syntax_institut.cmp.demo
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -18,14 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import composemultiplatformdemo.composeapp.generated.resources.Res
 import composemultiplatformdemo.composeapp.generated.resources.compose_multiplatform
-import de.syntax_institut.cmp.demp.data.remote.MealDBApi
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -34,7 +31,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
-        val coroutineScope = rememberCoroutineScope()
 
         Scaffold(
             modifier = Modifier
@@ -60,10 +56,7 @@ fun App() {
                 ) {
                     Button(
                         onClick = {
-                            //showContent = !showContent
-                            coroutineScope.launch {
-                                MealDBApi().randomMeal()
-                            }
+
                         }
                     ) {
                         Text(text = "Click me!")

@@ -1,4 +1,4 @@
-package de.syntax_institut.cmp.demp.data.model
+package de.syntax_institut.cmp.demo.data.model
 
 import kotlinx.serialization.Serializable
 

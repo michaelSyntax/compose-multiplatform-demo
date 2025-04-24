@@ -1,4 +1,4 @@
-package de.syntax_institut.cmp.demp
+package de.syntax_institut.cmp.demo
 
 import android.os.Build
 
