@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import de.syntax_institut.cmp.demo.navigation.NavigationItem
 import de.syntax_institut.cmp.demo.navigation.Route
-import de.syntax_institut.cmp.demo.ui.FavoritesScreen
 import de.syntax_institut.cmp.demo.ui.MealCategoriesScreen
 import de.syntax_institut.cmp.demo.ui.MealDetailScreen
 import de.syntax_institut.cmp.demo.ui.MealListScreen
@@ -21,9 +20,6 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun AppNavHost(
     navController: NavHostController,
-    didSelectCategory: (String) -> Unit,
-    didSelectMeal: (String) -> Unit,
-    didSelectRandomMeal: () -> Unit,
     modifier: Modifier = Modifier,
     selectedNavItem: NavigationItem
 ) {
@@ -33,6 +29,7 @@ fun AppNavHost(
     val mealsForCategory by viewModel.mealsForCategory.collectAsState()
     val selectedMealDetail by viewModel.selectedDetailMeal.collectAsState()
     val isFavorite by viewModel.isFavorite.collectAsState()
+    val favoriteMeals by viewModel.favoriteMeals.collectAsState()
 
     NavHost(
         navController = navController,
@@ -48,7 +45,13 @@ fun AppNavHost(
             )
         }
         composable<Route.FavoriteMeals> {
-            FavoritesScreen(modifier = modifier)
+            MealListScreen(
+                modifier = modifier,
+                meals = favoriteMeals,
+                didSelectMeal = {
+                    navController.navigate(Route.MealDetail(mealId = it))
+                }
+            )
         }
         composable<Route.MealCategoryList> {
             MealCategoriesScreen(

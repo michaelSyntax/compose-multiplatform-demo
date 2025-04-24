@@ -8,7 +8,6 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,11 +32,6 @@ fun App() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .safeDrawingPadding(),
-            topBar = {
-                TopAppBar(
-                    title = {}
-                )
-            },
             bottomBar = {
                 BottomAppBar(
                     content = {
@@ -54,9 +48,6 @@ fun App() {
                 AppNavHost(
                     modifier = screenModifier,
                     navController = navController,
-                    didSelectCategory = {},
-                    didSelectMeal = {},
-                    didSelectRandomMeal = {},
                     selectedNavItem = selectedNavItem
                 )
             }

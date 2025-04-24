@@ -7,6 +7,9 @@ import de.syntax_institut.cmp.demo.data.model.MealCategory
 import de.syntax_institut.cmp.demo.data.repository.MealRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MealViewModel(
@@ -24,6 +27,13 @@ class MealViewModel(
     private val _favoriteMeals = MutableStateFlow<List<Meal>>(emptyList<Meal>())
     val favoriteMeals = _favoriteMeals.asStateFlow()
 
+    private fun observeFavoriteMeals() {
+        mealRepository.getFavoriteMeals()
+            .onEach {
+            _favoriteMeals.value = it
+        }.launchIn(viewModelScope)
+    }
+
     private val _isFavorite = MutableStateFlow<Boolean>(false)
     val isFavorite = _isFavorite.asStateFlow()
 
@@ -34,6 +44,7 @@ class MealViewModel(
         viewModelScope.launch {
             _mealCategories.value = mealRepository.getMealCategories()
         }
+        observeFavoriteMeals()
     }
 
     fun refreshRandomMeal() {
