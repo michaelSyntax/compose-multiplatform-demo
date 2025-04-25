@@ -3,6 +3,8 @@ package de.syntax_institut.cmp.demo.data.local
 import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import kotlinx.coroutines.Dispatchers
 
 actual class DatabaseFactory(
     private val context: Context

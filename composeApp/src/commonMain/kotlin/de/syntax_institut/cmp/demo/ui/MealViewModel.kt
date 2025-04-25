@@ -27,13 +27,6 @@ class MealViewModel(
     private val _favoriteMeals = MutableStateFlow<List<Meal>>(emptyList<Meal>())
     val favoriteMeals = _favoriteMeals.asStateFlow()
 
-    private fun observeFavoriteMeals() {
-        mealRepository.getFavoriteMeals()
-            .onEach {
-            _favoriteMeals.value = it
-        }.launchIn(viewModelScope)
-    }
-
     private val _isFavorite = MutableStateFlow<Boolean>(false)
     val isFavorite = _isFavorite.asStateFlow()
 
@@ -44,7 +37,6 @@ class MealViewModel(
         viewModelScope.launch {
             _mealCategories.value = mealRepository.getMealCategories()
         }
-        observeFavoriteMeals()
     }
 
     fun refreshRandomMeal() {
@@ -61,13 +53,7 @@ class MealViewModel(
 
     fun toggleFavoriteMeal(meal: Meal) {
         viewModelScope.launch {
-            mealRepository.isMealFavorite(meal.idMeal).collect { isFavorite ->
-                if (isFavorite) {
-                    mealRepository.deleteFromFavorites(meal.idMeal)
-                } else {
-                    mealRepository.markAsFavorite(meal)
-                }
-            }
+            mealRepository.markAsFavorite(meal)
         }
     }
 
@@ -79,9 +65,13 @@ class MealViewModel(
 
     fun isFavorite(mealId: String) {
         viewModelScope.launch {
-            mealRepository.isMealFavorite(mealId).collect { isFavorite ->
-                _isFavorite.value = isFavorite
-            }
+
+        }
+    }
+
+    fun getFavoriteMeals() {
+        viewModelScope.launch {
+            _favoriteMeals.value = mealRepository.getFavoriteMeals()
         }
     }
 }

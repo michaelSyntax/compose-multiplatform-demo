@@ -45,6 +45,9 @@ fun AppNavHost(
             )
         }
         composable<Route.FavoriteMeals> {
+            println("Favorites: favoriteMeals.size: ${favoriteMeals.size}")
+            viewModel.getFavoriteMeals()
+
             MealListScreen(
                 modifier = modifier,
                 meals = favoriteMeals,
@@ -77,7 +80,6 @@ fun AppNavHost(
         composable<Route.MealDetail> {
             val routeMealDetail: Route.MealDetail = it.toRoute()
             viewModel.selectDetailMeal(routeMealDetail.mealId)
-            viewModel.isFavorite(routeMealDetail.mealId)
 
             MealDetailScreen(
                 meal = selectedMealDetail,

@@ -5,6 +5,7 @@ import de.syntax_institut.cmp.demo.data.model.Meal
 import de.syntax_institut.cmp.demo.data.model.MealCategory
 import de.syntax_institut.cmp.demo.data.remote.MealApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 
 class DefaultMealRepository(
@@ -27,24 +28,26 @@ class DefaultMealRepository(
         return apiService.getMealDetails(mealId)
     }
 
-    override fun getFavoriteMeals(): Flow<List<Meal>> {
-        return mealDao
-            .getFavoriteMeals()
+    override suspend fun getFavoriteMeals(): List<Meal> {
+        return mealDao.getAllFavorites()
     }
 
-    override fun isMealFavorite(mealId: String): Flow<Boolean> {
-        return mealDao
-            .getFavoriteMeals()
-            .map { meals ->
-                meals.any { it.idMeal == mealId }
-            }
+    fun isMealFavorite(mealId: String): Boolean {
+        return false
     }
 
     override suspend fun deleteFromFavorites(mealId: String) {
-        mealDao.deleteFavoriteMeal(mealId)
+       // mealDao.deleteFavoriteMeal(mealId)
     }
 
     override suspend fun markAsFavorite(meal: Meal) {
-        mealDao.upsert(meal)
+        println("DEBUG:: markAsFavorite --> meal.${meal.strMeal}")
+//        mealDao.upsert(meal)
+//        mealDao.addFavorite(meal)
+        try {
+            mealDao.addFavorite(meal)
+        } catch(e: Exception) {
+            println("ERROR:: addFavorite $e")
+        }
     }
 }
