@@ -21,7 +21,9 @@ class DefaultMealRepository(
     }
 
     override suspend fun getMealsForCategory(catId: String): List<Meal> {
-        return apiService.getMealsForCategory(catId)
+        val mealsForCategory = apiService.getMealsForCategory(catId)
+        mealDao.addMeals(mealsForCategory)
+        return mealsForCategory
     }
 
     override suspend fun getMeal(mealId: String): Meal {
@@ -37,7 +39,7 @@ class DefaultMealRepository(
     }
 
     override suspend fun deleteFromFavorites(mealId: String) {
-       // mealDao.deleteFavoriteMeal(mealId)
+        mealDao.deleteFavoriteMeal(mealId)
     }
 
     override suspend fun markAsFavorite(meal: Meal) {

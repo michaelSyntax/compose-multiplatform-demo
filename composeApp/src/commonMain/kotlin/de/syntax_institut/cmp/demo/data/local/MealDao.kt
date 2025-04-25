@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import de.syntax_institut.cmp.demo.data.model.Meal
-import kotlinx.coroutines.flow.Flow
-import kotlin.js.JsExport
 
 @Dao
 interface MealDao {
@@ -19,4 +17,7 @@ interface MealDao {
 
     @Query("SELECT * FROM favorite_meals")
     suspend fun getAllFavorites(): List<Meal>
+
+    @Upsert
+    suspend fun addMeals(meals: List<Meal>)
 }

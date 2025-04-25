@@ -53,7 +53,11 @@ class MealViewModel(
 
     fun toggleFavoriteMeal(meal: Meal) {
         viewModelScope.launch {
-            mealRepository.markAsFavorite(meal)
+            if (_favoriteMeals.value.contains(meal)) {
+                mealRepository.deleteFromFavorites(meal.idMeal)
+            } else {
+                mealRepository.markAsFavorite(meal)
+            }
         }
     }
 
@@ -63,10 +67,8 @@ class MealViewModel(
         }
     }
 
-    fun isFavorite(mealId: String) {
-        viewModelScope.launch {
-
-        }
+    fun isFavorite(meal: Meal) {
+        _isFavorite.value = _favoriteMeals.value.contains(meal)
     }
 
     fun getFavoriteMeals() {

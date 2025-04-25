@@ -80,6 +80,7 @@ fun AppNavHost(
         composable<Route.MealDetail> {
             val routeMealDetail: Route.MealDetail = it.toRoute()
             viewModel.selectDetailMeal(routeMealDetail.mealId)
+            viewModel.isFavorite(selectedMealDetail)
 
             MealDetailScreen(
                 meal = selectedMealDetail,
